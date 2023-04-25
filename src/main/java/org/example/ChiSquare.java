@@ -69,8 +69,11 @@ public class ChiSquare {
 
 
     public static void main(String[] args) throws Exception {
-        Path customPathOutputJob1 = new Path("/user/e12228456/output1input2");
-        Path customPathOutputJob2 = new Path("/user/e12228456/output2input3");
+        Path inputPath = new Path(args[0]);
+        String root = args[1];
+        Path customPathOutputJob1 = new Path(root + "/output1input2");
+        Path customPathOutputJob2 = new Path(root + "/output2input3");
+        Path customPathOutputJobFinal = new Path(root + "/output");
         Configuration conf = new Configuration();
 
         /*
@@ -86,7 +89,7 @@ public class ChiSquare {
         preCalcJob.setReducerClass(TotalCategory.TotalCategoryReducer.class);
         preCalcJob.setOutputKeyClass(Text.class);
         preCalcJob.setOutputValueClass(LongWritable.class);
-        FileInputFormat.addInputPath(preCalcJob, new Path(args[0]));
+        FileInputFormat.addInputPath(preCalcJob, inputPath);
         FileOutputFormat.setOutputPath(preCalcJob, customPathOutputJob1);
         preCalcJob.waitForCompletion(true);
         /*
@@ -104,7 +107,7 @@ public class ChiSquare {
         mainJob.setReducerClass(ChiSquareCalc.CustomReducer.class);
         mainJob.setOutputKeyClass(Text.class);
         mainJob.setOutputValueClass(Text.class);
-        FileInputFormat.addInputPath(mainJob, new Path(args[0]));
+        FileInputFormat.addInputPath(mainJob, inputPath);
         FileOutputFormat.setOutputPath(mainJob, customPathOutputJob2);
         mainJob.waitForCompletion(true);
 
@@ -119,7 +122,7 @@ public class ChiSquare {
         finalSort.setOutputKeyClass(Text.class);
         finalSort.setOutputValueClass(Text.class);
         FileInputFormat.addInputPath(finalSort, customPathOutputJob2);
-        FileOutputFormat.setOutputPath(finalSort, new Path(args[1]));
+        FileOutputFormat.setOutputPath(finalSort, customPathOutputJobFinal);
         finalSort.waitForCompletion(true);
     }
 }
