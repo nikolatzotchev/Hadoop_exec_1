@@ -10,6 +10,11 @@ import java.io.IOException;
 
 public class TotalCategory {
 
+    /**
+     * This is the mapper for the job counting the documents in each category.
+     * It works the same as word count mapper, but it also writes a key "ALL" used to count all the
+     * documents.
+     */
     public static class TotalCategoryMapper extends Mapper<Object, Text, Text, LongWritable> {
         private final Text keyText = new Text();
         private final LongWritable longWritable = new LongWritable(1);
@@ -22,7 +27,11 @@ public class TotalCategory {
         }
     }
 
-    public static class CustomReducer
+    /**
+     * This is the reducer for counting the total documents in each category
+     * it is the same as the reducer for the basic example of word count.
+     */
+    public static class TotalCategoryReducer
             extends Reducer<Text, LongWritable, Text, LongWritable> {
         private final LongWritable result = new LongWritable();
 

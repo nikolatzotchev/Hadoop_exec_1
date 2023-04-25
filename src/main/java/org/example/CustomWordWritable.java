@@ -12,7 +12,6 @@ import java.io.IOException;
 public class CustomWordWritable implements Writable {
     private LongWritable count;
     private Text category;
-    //default constructor for (de)serialization
     public CustomWordWritable() {
         this.count = new LongWritable( 0);
         this.category = new Text();
