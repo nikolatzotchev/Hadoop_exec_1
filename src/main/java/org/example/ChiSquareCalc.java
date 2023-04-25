@@ -134,9 +134,9 @@ public class ChiSquareCalc {
                 long B = sumAllCat - A;
                 long C = categoryMap.get(f) - A;
                 long D = N - categoryMap.get(f) - (B);
-                float r = (float) ((A * D - B * C) * (A * D - B * C)) / ((A + B) * (A + C) * (B + D) * (C + D));
+                double r = (double) ((A * D - B * C) * (A * D - B * C)) / ((A + B) * (A + C) * (B + D) * (C + D));
                 // this can be omitted if we only want the ranking
-               //  r = N * r;
+                r = N * r;
 
                 if (sortMap.containsKey(f)) {
                     PriorityQueue<CustomPair> p = sortMap.get(f);
